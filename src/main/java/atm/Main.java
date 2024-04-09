@@ -17,37 +17,22 @@ public class Main {
 
         System.out.println("Welcome to The Martinelli Bank!");
         while (true){
-            System.out.println("please select from the following: \n- (C) CheckBalance \n- (W) Withdrawal \n- (D Deposit \n- (Q) Quit");
+            System.out.println("please select from the following: \n- (B) Check Balance \n- (W) Withdrawal \n- (D Deposit \n- (Q) Quit");
             System.out.print("Enter option: ");
             option = scanner.nextLine();
-            if (option.equalsIgnoreCase("c")){
-                System.out.println("Balance: "+ machine.checkBalance());
-                holdTab();
+
+            if (option.equalsIgnoreCase("b")){
+                showBalance(machine);
             }
             else if (option.equalsIgnoreCase("d")){
                 System.out.print("How much do you want to deposit: ");
                 amount = scanner.nextLine();
-                if (convertToInt(amount) == null){
-                    System.out.println("you didn't enter a valid value");
-                }else {
-                    machine.deposit(Integer.parseInt(amount));
-                    System.out.println(">    Transaction complete!");
-                }
-                holdTab();
+                processDeposit(amount, machine);
             }
             else if (option.equalsIgnoreCase("w")){
                 System.out.print("How much do you want to withdraw: ");
                 amount = scanner.nextLine();
-                if (convertToInt(amount) == null){
-                    System.out.println("you didn't enter a valid value");
-                }
-                else if (machine.checkBalance() < convertToInt(amount)) {
-                    System.out.println("You don't have sufficient funds");
-                } else {
-                    machine.withdraw(Integer.parseInt(amount));
-                    System.out.println(">    Transaction complete!");
-                }
-                holdTab();
+                processWithdrawal(amount, machine);
             }
             else if (option.equalsIgnoreCase("q")) {
                 System.out.println("Thank you...");
@@ -56,6 +41,33 @@ public class Main {
         }
 
 
+    }
+
+    public void showBalance(ATM_Machine machine){
+        System.out.println("Balance: R"+ machine.checkBalance());
+        holdTab();
+    }
+
+    public void processDeposit(String amount, ATM_Machine machine) {
+        if (convertToInt(amount) == null) {
+            System.out.println("You didn't enter a valid value");
+        } else {
+            machine.deposit(Integer.parseInt(amount));
+            System.out.println(">    Transaction complete!");
+        }
+        holdTab();
+    }
+
+    public void processWithdrawal(String amount, ATM_Machine machine) {
+        if (convertToInt(amount) == null) {
+            System.out.println("You didn't enter a valid value");
+        } else if (machine.checkBalance() < convertToInt(amount)) {
+            System.out.println("You don't have sufficient funds");
+        } else {
+            machine.withdraw(Integer.parseInt(amount));
+            System.out.println(">    Transaction complete!");
+        }
+        holdTab();
     }
 
     private Integer convertToInt(String input){
@@ -71,12 +83,9 @@ public class Main {
     private void holdTab(){
         String hold;
         while (true){
-            System.out.println("press enter to continue");
+            System.out.println("press enter to go back to menu");
             hold = scanner.nextLine();
-            if (hold == null){
-                break;
-            }else
-                break;
+            break;
         }
     }
 
